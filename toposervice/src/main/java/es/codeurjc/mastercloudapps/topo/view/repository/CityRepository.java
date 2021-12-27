@@ -1,4 +1,4 @@
-package es.codeurjc.mastercloudapps.topo.repository;
+package es.codeurjc.mastercloudapps.topo.view.repository;
 
 import es.codeurjc.mastercloudapps.topo.model.City;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
