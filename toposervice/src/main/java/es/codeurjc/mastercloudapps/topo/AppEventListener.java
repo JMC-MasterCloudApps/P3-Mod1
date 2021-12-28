@@ -24,23 +24,13 @@ public class AppEventListener {
     this.cityRepository.deleteAll();
 
     Flux<City> cities = Flux.just(
-        new City("Madrid", "Flat"),
-        new City("Barcelona", "Flat"),
-        new City("Jaca", "Mountain"),
-        new City("Andorra", "Mountain"),
-        new City("Valencia", "Flat"),
-        new City("Sevilla", "Mountain"),
-        new City("Zaragoza", "Flat"),
-        new City("Málaga", "Mountain"),
-        new City("Murcia", "Flat"),
-        new City("Palma", "Mountain"),
-        new City("Bilbao", "Flat"),
-        new City("Alicante", "Mountain"),
+        new City("Almería", "Mountain"),
+        new City("Granada", "Mountain"),
+        new City("Sevilla", "Flat"),
+        new City("Málaga", "Flat"),
         new City("Córdoba", "Flat"),
-        new City("Valladolid", "Mountain"),
-        new City("Vigo", "Flat"),
-        new City("Gijón", "Mountain"),
-        new City("Vitoria", "Flat")
+        new City("Huelva", "Flat"),
+        new City("Cádiz", "Mountain")
     );
 
     cities.flatMap(this.cityRepository::save).blockLast();

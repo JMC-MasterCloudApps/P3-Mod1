@@ -4,7 +4,7 @@ import { __dirname } from './dirname.js'
 
 const protoPath = __dirname + '/../WeatherService.proto';
 
-const wheatherServiceProto = loadPackageDefinition(loadSync(protoPath,
+const weatherServiceProto = loadPackageDefinition(loadSync(protoPath,
   {
     keepCase: true,
     longs: String,
@@ -13,4 +13,4 @@ const wheatherServiceProto = loadPackageDefinition(loadSync(protoPath,
     oneofs: true
   }));
 
-export const WeatherService = wheatherServiceProto.es.codeurjc.mastercloudapps.planner.grpc.WeatherService;
+export const WeatherService = weatherServiceProto.es.codeurjc.mastercloudapps.planner.grpc.WeatherService;

@@ -1,23 +1,48 @@
 // Plant management functions
 
+const allPlantsQuery =
+    `query {
+          eoloPlants {
+                id
+                city
+                planning
+          }
+      }`;
+
+
+const createPlantQuery =
+    `mutation($eoloPlant: EoloPlantInput) {
+          createEoloPlant(eoloPlant: $eoloPlant) {
+                id
+                city
+                planning
+          }
+      }`;
+
+const deletePlantQuery =
+    `mutation($id: ID!) {
+          deleteEoloPlant(id: $id) {
+                id
+                city
+                planning
+          }
+      }`;
+
 async function createPlant() {
 
   const city = document.querySelector('#city').value;
 
   disableCreationButton();
 
-  const query = `mutation($eoloPlant: EoloPlantInput) {
-    createEoloPlant(eoloPlant: $eoloPlant) {
-      id
-      city
-      planning
-    }
-  }`;
+  const response = await graphql(createPlantQuery, { eoloPlant: { city }});
 
-  const response = await graphql(query, { eoloPlant: { city }});
+  if (response.errors) {
+    console.log(response.errors[0].message);
+    enableCreationButton();
+    return;
+  }
 
   const plant = response.data.createEoloPlant;
-
   console.log(JSON.stringify(plant));
 
   createPlantView(plant);
@@ -28,15 +53,7 @@ async function createPlant() {
 
 async function getAllPlants() {
 
-  const query = `query {
-    eoloPlants {
-      id
-      city
-      planning
-    }
-  }`;
-
-  const response = await graphql(query);
+  const response = await graphql(allPlantsQuery);
 
   const plants = response.data.eoloPlants;
   
@@ -45,15 +62,7 @@ async function getAllPlants() {
 
 function deletePlant(id) {
 
-  const query = `mutation($id: ID!) {
-    deleteEoloPlant(id: $id) {
-      id
-      city
-      planning
-    }
-  }`;
-
-  graphql(query, { id });
+  graphql(deletePlantQuery, { id });
 
   deletePlantView(id);
 }
@@ -68,7 +77,7 @@ async function graphql(request, variables) {
     body: JSON.stringify({ query: request, variables })
   });
 
-  return await response.json();
+  return response.json();
 }
 
 // Plant View functions

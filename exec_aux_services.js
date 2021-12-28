@@ -12,5 +12,20 @@ function exec(serviceName, command){
   });
 }
 
-exec('MongoDB', 'docker run --rm -d -p 27017-27019:27017-27019 --name mongodb mongo');
-exec('MySQL', 'docker run --rm -d -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=eoloplantsDB -p 3306:3306 --name mysql mysql:8.0.22');
+exports.mongoContainer = 'p3MongoDB'
+exports.mongoExpressContainer = 'p3MongoExpress'
+exports.mySqlContainer = 'p3MySql'
+exports.mongoPort = '2222'
+exports.mongoExpressPort = '3333'
+exports.mySqlPort = '4444'
+
+const mongoContainer = 'p3MongoDB'
+const mongoExpressContainer = 'p3MongoExpress'
+const mySqlContainer = 'p3MySql'
+const mongoPort = '2222'
+const mongoExpressPort = '3333'
+const mySqlPort = '4444'
+
+exec('MongoDB', `docker run --rm -d -p ${mongoPort}:27017 --name ${mongoContainer} mongo:4.4-bionic`)
+exec('MongoExpress', `docker run --link ${mongoContainer}:mongo -d -p ${mongoExpressPort}:8081 --name ${mongoExpressContainer} -e ME_CONFIG_MONGODB_URL="mongodb://mongo:${mongoPort}" mongo-express`)
+exec('MySQL', `docker run --rm -d -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=eoloplantsDB -p ${mySqlPort}:3306 --name ${mySqlContainer} mysql:8.0.22`);
